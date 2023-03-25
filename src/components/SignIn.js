@@ -1,5 +1,6 @@
+
 import React, { useState } from 'react';
-import { Navigate, useNavigate } from 'react-router-dom';
+import {  useNavigate } from 'react-router-dom';
 
 
 
@@ -15,7 +16,7 @@ setcredentials([
  }
 const navigate=useNavigate();
 let sendcredential=async()=>{
- await fetch('http://localhost:5000/credential',{
+ await fetch('https://btup.netlify.app/.netlify/functions/index/credential',{
     method:"POST",
     headers:{"Content-Type": "application/json"},
     mode:"cors",
@@ -33,7 +34,6 @@ let sendcredential=async()=>{
     }
   })
 }
-
 
 
 

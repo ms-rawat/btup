@@ -1,64 +1,74 @@
-import { useEffect, useState } from "react";
-import "./App.css";
+import React, { useState } from "react";
+import "./App.css"
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  Paper,
+  TablePagination,
+} from "@mui/material";
 
-const Paper = () => {
-  const [Filename, setFileName] = useState([]);
 
-  const fetchLink = async () => {
-    const result = await fetch("http://localhost:5000/links", {
-      method: "post",
-      mode: "cors",
-      redirect: "follow",
-    });
-    const data = await result.json();
-    setFileName(data);
+
+const columns = [
+  { id: "subject", label: "subject" },
+  { id: "year", label: "year" },
+  {id:"link" ,label:"link"}
+];
+
+const Papers = (prop) => {
+  const [page, setPage] = useState(0);
+  const [rowsPerPage, setRowsPerPage] = useState(10);
+
+  const handleChangePage = (event, newPage) => {
+    setPage(newPage);
   };
 
-  useEffect(() => {
-    fetchLink();
-   
-  }, []);
+  const handleChangeRowsPerPage = (event) => {
+    setRowsPerPage(parseInt(event.target.value, 10));
+    setPage(0);
+  };
 
-  
-console.log(Filename)
-
-
-
-
-
-
-
-
- 
   return (
-    <>
-    {Filename.length > 0 && (
-      
-  <div className="Table">
-   
-    <table>
-      <caption>your papers</caption>
-      <thead>
-        <th>subject</th>
-        <th>link</th>
-        <th>year</th>
-      </thead>
-      <tbody>
-        {Filename.map((item) => (
-          <tr>
-            <td>{item.Subject}</td>
-            <td><a href={item.Link} download>click here</a></td>
-            <td>{item.Year}</td>
-          </tr>
-        ))}
-       
-      </tbody>
-    </table>
-  </div>
-)}
+    <div className="table">
+    <TableContainer component={Paper}>
+      <Table>
+        <TableHead>
+          <TableRow>
+            {columns.map((column) => (
+              <TableCell key={column.id}>{column.label}</TableCell>
+            ))}
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          {prop.data
+            .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+            .map((row) => (
+              <TableRow key={row.id}>
+                <TableCell>{row.Subject}</TableCell>
+                <TableCell>{row.Year}</TableCell>
+                <TableCell><a  className="linktag" href={row.Link}>downlod</a></TableCell>
+              </TableRow>
+            ))}
+        </TableBody>
+      </Table>
+      <TablePagination
+        rowsPerPageOptions={[2, 5, 10]}
+        component="div"
+        count={prop.data.lenght}
+        rowsPerPage={rowsPerPage}
+        page={page}
+        onPageChange={handleChangePage}
+        onRowsPerPageChange={handleChangeRowsPerPage}
+      />
+    </TableContainer>
+    
+    </div>
 
-    </>
   );
 };
 
-export default Paper;
+export default Papers;

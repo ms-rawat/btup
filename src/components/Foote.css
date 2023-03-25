@@ -1,6 +1,6 @@
 footer{
 width: 100%;
-position: fixed;
+/* position: fixed; */
 bottom: 0;
 }
 .footer-container{
@@ -81,4 +81,9 @@ h4{
 a{
     text-decoration: none;
     color: whitesmoke;
+}
+
+.linktag{
+    color: black;
+    text-decoration: underline;
 }

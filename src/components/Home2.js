@@ -1,15 +1,22 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
+
+import "./App.css";
+import Papers from "./Paper";
 
 const Home2 = () => {
+
   const [courseData, setCourseData] = useState([]);
   const [uniqueCourses, setUniqueCourses] = useState([]);
   const [stream, setStream] = useState([]);
   const [selection, setSelection] = useState([]);
+  const [links,setlinks]=useState([]);
+  const [showpaper,setshowpaper]=useState(false)
   const sem = [1, 2, 3, 4, 5, 6, 7, 8];
+  
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch("http://localhost:5000/cd", {
+        const response = await fetch("https://btup.netlify.app/.netlify/functions/index/cd", {
           method: "POST",
           mode: "cors",
           redirect: "follow",
@@ -43,18 +50,39 @@ const Home2 = () => {
   };
 
   let SendSelection = async () => {
-    await fetch("http://localhost:5000/selection", {
+   let response= await fetch("https://btup.netlify.app/.netlify/functions/index/selection", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(selection),
-    });
+
+    })
+    const result = await response.json();
+
+    setlinks(result)
+    setshowpaper(true)
+    scroltosection();
+   
   };
 
+
+  const paperRef=useRef(null)
+
+  const scroltosection = () => {
+    paperRef.current.shscrollIntoView({ behavior: "smooth" });
+  };
+  
+
+
+
+
+
+
+  
   return (
     <div>
       {/* <h1 className="heading">BtuOnline</h1> */}
       <div>
-        <form onSubmit={SendSelection} action="/Paper" className="form1">
+        <div className="form1">
           <h2>select and get your papers</h2>
           <select name="Course" onChange={(event) => handleSelection(event, 0)}>
             <option value="">Select a course</option>
@@ -84,9 +112,14 @@ const Home2 = () => {
             ))}
           </select>
 
-          <button type="submit">Enter</button>
+          <button onClick={SendSelection} type="submit">Enter</button>
         
-        </form>
+        </div>
+      </div>
+      
+      <div ref={paperRef}>
+      
+      {showpaper ? <Papers data={links}/> : null}
       </div>
     </div>
   );

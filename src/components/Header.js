@@ -28,9 +28,7 @@ const Header = () => {
           <li>
           <Link to="/contact">Contcat-us</Link>
           </li>
-          <li>
-          <Link to="/Crud">crud</Link>
-          </li>
+          
         </ul>
       </nav>
     </header>

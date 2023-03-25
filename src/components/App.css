@@ -1,19 +1,6 @@
 
 
-td,th{
-    border: 1px solid red;
-    padding: 2px;
- 
-}
-caption {
-    font-size: 2rem;
-    border:solid 2px red;
-}
-table{
-    border-collapse: collapse;
-    margin: auto;
-    margin-bottom: 20px;
-}
+
 .form1 {
     max-width: 500px;
     margin: auto;
@@ -148,18 +135,13 @@ table{
   .heading{
     text-align: center;
   } */
-  .Table{
-    margin-top: 30px;
-  }
+  
   .form-2{
     width: 400px;
     margin: auto;
     margin-bottom: 20px;
   }
- .googlelogin{
-  width: 200px;
-  margin: 100px auto;
- }
+ 
 
  .form3{
   display: grid;
@@ -219,4 +201,13 @@ table{
  ::placeholder {
   color:black;
   font-size: 16px;
+}
+
+.table{
+  width: 70%;
+  margin: auto auto 20px;
+}
+
+.table{
+  background: #333;
 }
